@@ -279,17 +279,6 @@ label {
   z-index: 20;
 }
 
-/* .app__header::before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-image: linear-gradient(to bottom, var(--global-background-color), transparent);
-} */
-
 .app__interface {
   display: flex;
   align-items: start;
@@ -304,6 +293,7 @@ label {
 
 .app__button {
   position: relative;
+  will-change: transform;
   transition: transform .1s ease-in-out;
 }
 
@@ -319,10 +309,16 @@ label {
 }
 
 .app__poem,
-.app__loading {  
-  will-change: opacity, transform;
-  transition: all .5s ease;
-  transition-property: opacity, transform;
+.app__loading {    
+  transition: opacity .5s ease;
+}
+
+.app__loading {
+  will-change: opacity;
+}
+
+.app__poem {
+  will-change: contents;
 }
 
 .app__loading {
@@ -347,7 +343,6 @@ label {
 .is-loading .app__poem,
 .is-starting .app__poem {
   opacity: 0;
-  /* transform: scale(.99); */
 }
 
 .app__loader {
@@ -509,14 +504,10 @@ a[href="about"] {
   font-size: 1rem;
   background-color: var(--global-background-color);
   border-left: 1px solid var(--global-border-color);
-  /* box-shadow: 0 0 20px hsl(var(--global-shadow-hsl) / .2); */
-  transform: translateX(100%);
   will-change: transform;
-  /* transition: transform .5s ease-in; */
-  /* transition: transform .5s ease; */
-  /* transition: transform .5s ease-in-out; */
-  transition: transform .35s cubic-bezier(0.445, 0.050, 0.550, 0.950);
-  /* transition: transform .5s cubic-bezier(0.65, 0, 0.35, 1); */
+  transform: translateX(100%);  
+  transition: transform .35s ease-in;
+  /* transition: transform .35s cubic-bezier(0.47, 0, 0.75, 0.72); */
 }
 
 .settings__background {
@@ -526,8 +517,8 @@ a[href="about"] {
   bottom: 0;
   left: 0;
   background-color: var(--settings__backgroundColor, var(--global-color-neutral-100));
-  opacity: var(--settings__background-opacity, 0);
   will-change: opacity;
+  opacity: var(--settings__background-opacity, 0); 
   transition: opacity .35s ease;
 }
 
@@ -546,6 +537,7 @@ a[href="about"] {
 .show-settings .settings__container {
   transform: translateX(var(--global-whitespace));
   /* transition-timing-function: ease-out; */
+  transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
   opacity: 1;
 }
 
@@ -627,6 +619,7 @@ a[href="about"] {
   background: var(--global-surface-color);
   box-shadow: 0 0 0 1px hsl(39deg 30% 10% / .075), 0 1px 4px hsl(39deg 30% 10% / .3);
   /* margin-top: calc(-1 * var(--toggle__thumb-size) / 2 + calc(var(--toggle-height) / 2)); */
+  will-change: transform;
   transform: translate(0, var(--toggle__thumb-offset));
   border-radius: 50%;
   transition: transform .1s ease;
