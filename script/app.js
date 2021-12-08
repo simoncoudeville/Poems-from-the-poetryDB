@@ -96,12 +96,9 @@ function show(data) {
         footerEl.textContent = author;
 
         hideloader();
-        storeTitle(originalTitle);
-    }, 1500);
-}
 
-function storeTitle(originalTitle) {
-    localStorage.setItem("storedTitle", JSON.stringify(originalTitle));
+        localStorage.setItem("storedTitle", JSON.stringify(originalTitle));
+    }, 1500);
 }
 
 function getStoredTitle() {
