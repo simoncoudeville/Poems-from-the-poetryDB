@@ -1,5 +1,6 @@
-const apiUrlRandomLinecount = "https://poetrydb.org/linecount,random/";
-const apiUrlRandom = "https://poetrydb.org/random/1";
+const apiUrlRandomLinecount = "https://poetrydb.org/linecount,random/",
+    apiUrlRandom = "https://poetrydb.org/random/1",
+    apiUrl = "https://poetrydb.org/title/";
 
 const appEl = document.querySelector('#app'),
     titleEl = document.querySelector('#poem-title'),
@@ -15,6 +16,7 @@ const appEl = document.querySelector('#app'),
     maxLinecountEl = document.querySelector('#maxLinecount'),
     maxLinecountOutputEl = document.querySelector('#maxLinecountOutput');
 
+let storedTitle = "";
 let linecountMin = 2;
 let linecountMax = 0;
 let linecount = 0;
@@ -25,10 +27,29 @@ function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-async function getapi(url) {
+async function getStoredPoem(url) {
+    url = apiUrl + storedTitle;
+
+    // Storing response
+    const response = await fetch(
+        url
+    );
+
+    // Storing data in form of JSON
+    var data = await response.json();
+
+    if (response) {
+        show(data);
+    } else {
+        console.log('something bad happened')
+    }
+}
+
+async function getRandomPoem(url) {
     if (randomLinecount == false) {
         url = apiUrlRandom;
-    } else {
+    }
+    else {
         url = apiUrlRandomLinecount + linecount + ";1";
     }
 
@@ -61,6 +82,7 @@ function show(data) {
     setTimeout(function () {
         let { title, lines, author } = data[0];
 
+        originalTitle = title;
         title = title.replaceAll("--", "—");
         titleEl.textContent = title;
 
@@ -74,14 +96,21 @@ function show(data) {
         footerEl.textContent = author;
 
         hideloader();
+        storeTitle(originalTitle);
     }, 1500);
 }
 
-randomButtonEl.addEventListener('click', function () {
-    setLineCount();
-    showloader();
-    getapi();
-});
+function storeTitle(originalTitle) {
+    localStorage.setItem("storedTitle", JSON.stringify(originalTitle));
+}
+
+function getStoredTitle() {
+    if (localStorage.getItem("storedTitle")) {
+        storedTitle = JSON.parse(localStorage.getItem("storedTitle"));
+    } else {
+        return storedTitle;
+    }
+}
 
 function toggleSettings() {
     for (let i = 0; i < toggleSettingsButtonEl.length; i++) {
@@ -100,25 +129,35 @@ function setLineCount() {
 function checkRandomLinecountSetting() {
     if (randomLinecountSettingEl.checked) {
         randomLinecount = true;
-        // maxLinecountEl.setAttribute("disabled", false);
         maxLinecountEl.disabled = false;
         maxLinecountSettingEl.classList.remove('is-disabled');
     } else {
         randomLinecount = false;
-        // maxLinecountEl.setAttribute("disabled", true);
         maxLinecountEl.disabled = true;
         maxLinecountSettingEl.classList.add('is-disabled');
     }
 }
 
-settingsForm.addEventListener('input', function () {
-    checkRandomLinecountSetting();
-    setLineCount();
-});
 
 document.addEventListener('DOMContentLoaded', function () {
     checkRandomLinecountSetting();
     toggleSettings();
     setLineCount();
-    getapi();
+    getStoredTitle();
+    if (storedTitle === "") {
+        getRandomPoem();
+    } else {
+        getStoredPoem();
+    }
+});
+
+randomButtonEl.addEventListener('click', function () {
+    setLineCount();
+    showloader();
+    getRandomPoem();
+});
+
+settingsForm.addEventListener('input', function () {
+    checkRandomLinecountSetting();
+    setLineCount();
 });
