@@ -1,12 +1,12 @@
 {
-    "name": "Poem's from the poetry database",
-    "short_name": "POEM",
+    "name": "Poems from the poetry database",
+    "short_name": "POEMS",
     "start_url": "/",
     "scope": "/",
     "display": "standalone",
     "background_color": "#f6f3ee",
 	"theme_color": "#f6f3ee",
-    "description": "Poem's from the poetry database is a small web app that generates random poem's from the poetryDB Api",
+    "description": "Poems from the poetry database is a small web app that generates random poems from the poetryDB Api",
     "icons": [
         { "src": "./icon-192.png", "type": "image/png", "sizes": "192x192" },
         { "src": "./icon-512.png", "type": "image/png", "sizes": "512x512" }
