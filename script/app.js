@@ -158,3 +158,9 @@ settingsForm.addEventListener('input', function () {
     checkRandomLinecountSetting();
     setLineCount();
 });
+
+/* pwa service worker stuff */
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js");
+}
