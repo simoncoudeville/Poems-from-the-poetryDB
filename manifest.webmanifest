@@ -9,8 +9,7 @@
     "description": "Poems from the poetry database is a small web app that generates random poems from the poetryDB Api",
     "prefer_related_applications": false,
     "icons": [
-        { "src": "./icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
-        { "src": "./icon-192-maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable" },
+        { "src": "./icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any maskable" },
         { "src": "./icon-512.png", "type": "image/png", "sizes": "512x512" }
     ]
 }
